@@ -12,31 +12,21 @@
 	<meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
 	<meta name="author" content="FREEHTML5.CO" />
-		<script src="jquery-1.9.0.min.js"></script>
-		<script>
-		function validateImage() {
-			var img = $("#img_file").val();
-		 
-			var exts = ['jpg','jpeg','png','gif', 'bmp'];
-			// split file name at dot
-			var get_ext = img.split('.');
-			// reverse name to check extension
-			get_ext = get_ext.reverse();
-		 	
-			if (img.length > 0 ) {
-				if ( $.inArray ( get_ext[0].toLowerCase(), exts ) > -1 ){
-				  return true;
-				} else {
-					 alert("Upload only jpg, jpeg, png, gif, bmp images");
-					return false;
-				}			
-			} else {
-				alert("please upload an image");
-				return false;
-			}
-			return false;
-		}
-		</script>
+
+	<?php
+
+
+			$mysqliob = new mysqli('localhost','root','dusty') ;
+					
+			$mysqliob->select_db("orbasmdb")or die($mysqliob->$error_list);
+			
+			$imagelist = mysqli_query($mysqliob,"SELECT * FROM Imagetable ORDER BY id DESC");
+			//$row = $imagelist->fetch_array(MYSQLI_ASSOC);
+			//echo $row['img_name'];
+			//echo 'swapnil';
+			//echo mysqli_num_rows($imagelist) or die($mysqliob->$error_list);
+			
+	?>
   <!-- 
 	//////////////////////////////////////////////////////
 
@@ -64,7 +54,7 @@
 
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 	<link rel="shortcut icon" href="favicon.ico">
-	<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
 	<!-- Google Webfonts -->
 	<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
@@ -93,10 +83,12 @@
 		<a href="#" class="fh5co-offcanvass-close js-fh5co-offcanvass-close">Menu <i class="icon-cross"></i> </a>
 		<h1 class="fh5co-logo"><a class="navbar-brand" href="index.html">Orbasm</a></h1>
 		<ul>
-			<li><a href="index.html">Home</a></li>
-			<li class="active"><a href="about.html">About</a></li>
-			<li><a href="pricing.html">Pricing</a></li>
+			<li class="active"><a href="index.html">Home</a></li>
+			<li><a href="about.html">About</a></li>
+			<li><a href="upload.php">Upload</a></li>
 			<li><a href="contact.html">Contact</a></li>
+			<li><a href="contact.html">Signup</a></li>
+			<li><a href="contact.html">Login</a></li>
 		</ul>
 		<h3 class="fh5co-lead">Connect with us</h3>
 		<p class="fh5co-social-icons">
@@ -118,73 +110,34 @@
 		</div>
 	</header>
 	<!-- END .header -->
-			<?php
-				if(isset($_POST["submit"])){
-					
-					//php7 doesn't support mysql lib so mysqli is used instead,below is a mysqli object.
-					$mysqliob = new mysqli('localhost','root','dusty') ;
-					
-					$mysqliob->select_db("orbasmdb")or die($mysqliob->$error_list);
-					
-					$file=$_FILES["img_file"]["tmp_name"];//name of file in temporary directory of server
-
-					$image=addslashes(file_get_contents($_FILES['img_file']['tmp_name']));//addslashes is required to prevent sql injection. what file get contents get is mostly a binary object therefore in DB make space for a 'blob' object.
-					$image_name=addslashes($_FILES['img_file']['name']); 
-					
-						
-					$image_size=getimagesize($file);
-					if ($image_size==false)
-						die( "<div class='alert alert-danger'>so you do not know what an <strong>image</strong> is..
-</div>");
-					//echo "here";
-					echo "<h5> $image_name is uploaded</h5>";
-					$insert =mysqli_query($mysqliob,"INSERT INTO Imagetable (`img_name`,`img_obj`) VALUES ('".$image_name."','".$image."' )") or die(mysqli_error($mysqliob));
-					
-					if(!$insert)
-						echo "some shit occured during uploading";
-					else
-					{	
-						
-						$last_id=$mysqliob->insert_id;
-						//echo "here";
-						//echo $last_id;
-
-											 echo "Image uploaded.<p /> Your image:<p />"; 
-											 $image3 = "SELECT * FROM Imagetable where id=$last_id"; 
-											 $r=mysqli_query($mysqliob, $image3); 
-											 $row = mysqli_fetch_array($r);
-											  echo '<img src="data:image/jpeg;base64,' . base64_encode( $row['img_obj'] ) . '" />'; 
-											  //echo $row['img_name'];
-						/*echo "and your image looks like<br><img src=get.php?id=$last_id>";
-						//echo "here";
-						//echo "here";
-
-						// echo "<a href=get.php?id=$last_id>hey</a>";*/
-					}
-						
-
-
-				}
-				else
-				{	echo "<h4>please upload an image</h4>
-						<form class='form-inline' method='post' action='' name='f' enctype='multipart/form-data' ><!--enctype,method and action are imp.-->
-						  <div class='form-group'>
-						    <label class='sr-only' for='exampleInputAmount'>img upload</label>
-						    <div class='input-group'>
-						      
-						      <input type='file'  id='img_file' name='img_file' placeholder='from root'><!--type and name are imp.-->
-						      
-						    </div>
-						  </div>
-						  <button type='submit' class='btn btn-primary' value='Submit' name='submit' onSubmit='return validateImage();' >upload</button>
-						</form>";
-
-				}
-			?>
-
 	
-			
-			
+	
+	<div id="fh5co-main">
+		<div class="container">
+				
+			<div class="row">
+
+	        	<div id="fh5co-board" data-columns>
+	        			
+		        	<?php
+		        		//echo "swapnil";
+		        		//$row=$imagelist->fetch_array(MYSQLI_ASSOC );
+		        		
+		        		while($row=$imagelist->fetch_array(MYSQLI_ASSOC )){
+		        			
+				        	echo '<div class="item">
+				        		<div class="animate-box">
+					        		<a href="images/img_1.jpg" class="image-popup fh5co-board-img" title="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, eos?"><img src="data:image/jpeg;base64,' . base64_encode( $row['img_obj'] ) . '" alt="Free HTML5 Bootstrap template"></a>
+				        		</div>
+				        		<div class="fh5co-desc"><!--text could have been written here--></div>
+				        	</div>';
+				        }	
+	        		?>
+	        	</div>
+	        </div>
+       </div>
+	</div>
+
 	<footer id="fh5co-footer">
 		
 		<div class="container">
@@ -218,7 +171,7 @@
 	<script src="js/salvattore.min.js"></script>
 	<!-- Main JS -->
 	<script src="js/main.js"></script>
-	<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+
 	
 
 	
