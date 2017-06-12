@@ -18,10 +18,11 @@
 
 			$mysqliob = new mysqli('localhost','root','dusty') ;
 					
-			$mysqliob->select_db("orbasmdb")or die($mysqliob->$error_list);
+			$mysqliob->select_db("orbasmdbano")or die($mysqliob->$error_list);
 			
-			$imagelist = mysqli_query($mysqliob,"SELECT * FROM Imagetable ORDER BY id DESC");
-			//$row = $imagelist->fetch_array(MYSQLI_ASSOC);
+			$imagelist = mysqli_query($mysqliob,"SELECT * FROM Imagetableano ORDER BY idano DESC");
+
+			 //$row = $imagelist->fetch_array(MYSQLI_ASSOC);
 			//echo $row['img_name'];
 			//echo 'swapnil';
 			//echo mysqli_num_rows($imagelist) or die($mysqliob->$error_list);
@@ -85,7 +86,7 @@
 		<ul>
 			<li class="active"><a href="index.html">Home</a></li>
 			<li><a href="about.html">About</a></li>
-			<li><a href="upload.php">Upload</a></li>
+			<li><a href="uploadano.php">Upload</a></li>
 			<li><a href="contact.html">Contact</a></li>
 			<li><a href="contact.html">Signup</a></li>
 			<li><a href="contact.html">Login</a></li>
@@ -127,7 +128,7 @@
 		        			
 				        	echo '<div class="item">
 				        		<div class="animate-box">
-					        		<a href="images/img_1.jpg" class="image-popup fh5co-board-img" title="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, eos?"><img src="data:image/jpeg;base64,' . base64_encode( $row['img_obj'] ) . '" alt="Free HTML5 Bootstrap template"></a>
+					        		<a href="images/img_1.jpg" class="image-popup fh5co-board-img" title="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, eos?"><img src="uploadsano/img_'.$row['idano'].'" alt="Free HTML5 Bootstrap template"></a>
 				        		</div>
 				        		<div class="fh5co-desc"><!--text could have been written here--></div>
 				        	</div>';
