@@ -136,16 +136,32 @@
 					if ($image_size==false)
 						die( "<div class='alert alert-danger'>so you do not know what an <strong>image</strong> is..
 </div>");
+					//echo "here";
+					echo "<h5> $image_name is uploaded</h5>";
+					$insert =mysqli_query($mysqliob,"INSERT INTO Imagetable (`img_name`,`img_obj`) VALUES ('".$image_name."','".$image."' )") or die(mysqli_error($mysqliob));
 					
-					echo "<h5>".$image_name." is uploaded</h5>";
-
-					if(!mysqliob->send_query("INSERT INTO Itemtable VALUES ('','$image_name','$image' )"))
+					if(!$insert)
 						echo "some shit occured during uploading";
 					else
-					{
-						$last_id=mysqliob->$insert_id();
-						echo "and your image looks like<br><img src=get.php?id=$lastid>";
+					{	
+						
+						$last_id=$mysqliob->insert_id;
+						echo "here";
+						echo $last_id;
+
+											 echo "Image uploaded.<p /> Your image:<p />"; 
+											 $image3 = "SELECT * FROM Imagetable where id=$last_id"; 
+											 $r=mysqli_query($mysqliob, $image3); 
+											 $row = mysqli_fetch_array($r);
+											  echo '<img src="data:image/jpeg;base64,' . base64_encode( $row['img_obj'] ) . '" />'; 
+											  echo $row['img_name'];
+						//echo 'and your image looks like<br><img src="get.php?id='.$lastid.'">';
+						//echo "here";
+						//echo "here"; echo "<img src=get.php?id=$lastid>";
 					}
+						
+
+
 				}
 				else
 				{	echo "<h4>please upload an image</h4>
