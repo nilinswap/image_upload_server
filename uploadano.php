@@ -91,9 +91,9 @@
 		
 	<div id="fh5co-offcanvass">
 		<a href="#" class="fh5co-offcanvass-close js-fh5co-offcanvass-close">Menu <i class="icon-cross"></i> </a>
-		<h1 class="fh5co-logo"><a class="navbar-brand" href="index.html">Orbasm</a></h1>
+		<h1 class="fh5co-logo"><a class="navbar-brand" href="index.php">Orbasm</a></h1>
 		<ul>
-			<li><a href="index.html">Home</a></li>
+			<li><a href="index.php">Home</a></li>
 			<li class="active"><a href="about.html">About</a></li>
 			<li><a href="pricing.html">Pricing</a></li>
 			<li><a href="contact.html">Contact</a></li>
@@ -112,7 +112,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<a href="#" class="fh5co-menu-btn js-fh5co-menu-btn">Menu <i class="icon-menu"></i></a>
-					<a class="navbar-brand" href="index.html">Orbasm</a>		
+					<a class="navbar-brand" href="index.php">Orbasm</a>		
 				</div>
 			</div>
 		</div>

@@ -120,65 +120,127 @@
 	<!-- END .header -->
 			<?php
 				if(isset($_POST["submit"])){
-					
-					//php7 doesn't support mysql lib so mysqli is used instead,below is a mysqli object.
-					$mysqliob = new mysqli('localhost','root','dusty') ;
-					
-					$mysqliob->select_db("orbasmdb")or die($mysqliob->$error_list);
-					
-					$file=$_FILES["img_file"]["tmp_name"];//name of file in temporary directory of server
+					$name=$_POST['Username'];
+					$email=$_POST['email'];
+					$pass=$_POST['password'];
+					$repass=$_POST['repassword'];
+					if($pass!=$repass)
+												echo '<div id="signup">   
+						          <h1>Sign Up </h1>
+						          
+						          <form  action="" method="POST">
+						          
+						            <div class="field-wrap">
+						              <label>
+						                Name<span class="req">*</span>
+						              </label>
+						              <input type="text", name="Username", value="",required autocomplete="off">
+						            </div>
+						            
 
-					$image=addslashes(file_get_contents($_FILES['img_file']['tmp_name']));//addslashes is required to prevent sql injection. what file get contents get is mostly a binary object therefore in DB make space for a 'blob' object.
-					$image_name=addslashes($_FILES['img_file']['name']); 
-					
-						
-					$image_size=getimagesize($file);
-					if ($image_size==false)
-						die( "<div class='alert alert-danger'>so you do not know what an <strong>image</strong> is..
-</div>");
-					//echo "here";
-					echo "<h5> $image_name is uploaded</h5>";
-					$insert =mysqli_query($mysqliob,"INSERT INTO Imagetable (`img_name`,`img_obj`) VALUES ('".$image_name."','".$image."' )") or die(mysqli_error($mysqliob));
-					
-					if(!$insert)
-						echo "some shit occured during uploading";
-					else
-					{	
-						
-						$last_id=$mysqliob->insert_id;
-						//echo "here";
-						//echo $last_id;
 
-											 echo "Image uploaded.<p /> Your image:<p />"; 
-											 $image3 = "SELECT * FROM Imagetable where id=$last_id"; 
-											 $r=mysqli_query($mysqliob, $image3); 
-											 $row = mysqli_fetch_array($r);
-											  echo '<img src="data:image/jpeg;base64,' . base64_encode( $row['img_obj'] ) . '" />'; 
-											  //echo $row['img_name'];
-						/*echo "and your image looks like<br><img src=get.php?id=$last_id>";
-						//echo "here";
-						//echo "here";
+						            
+						    
 
-						// echo "<a href=get.php?id=$last_id>hey</a>";*/
+
+
+						          <div class="field-wrap">
+						            <label>
+						              Email Address<span class="req">*</span>
+						            </label>
+						           <input type="email", name="email", value="",required autocomplete="off">
+						          </div>
+						          
+
+
+
+						          <div class="field-wrap">
+						            <label>
+						              Set a Password<span class="req">*</span>
+						            </label>
+						            <input type="password", name="password", value="",required autocomplete="off">
+						          </div>
+
+
+
+						        
+						          <div class="field-wrap">
+						            <label>
+						              Confirm Password<span class="req">*</span>
+						            </label>
+						            <input type="password", name="repassword", value="", autocomplete="off"/>
+						          </div>
+						         
+						         
+						          <button name="submit" type="submit" class="button button-block" value="submit"/>Get Started</button>
+						          </form>
+
+						        </div><br><div class="alert alert-danger">two passwords matching is least we can expect of you. :/
+						</div>';
+					else{
+						$mysqliob = new mysqli('localhost','root','dusty') ;
+					
+						$mysqliob->select_db("orbasmdbano")or die($mysqliob->$error_list);
+						$insert =mysqli_query($mysqliob,"INSERT INTO Usertable (`username`,`email`,`pass`) VALUES ('".$name."','".$email."','".$pass."' )") or die(mysqli_error($mysqliob));
+						if(!$insert)
+							echo "not done";
+						else
+							echo "<h4> Welcome! you are signed up with us. Log in to upload.</h4>";
+
 					}
-						
-
-
 				}
-				else
-				{	echo "<h4>please upload an image</h4>
-						<form class='form-inline' method='post' action='' name='f' enctype='multipart/form-data' ><!--enctype,method and action are imp.-->
-						  <div class='form-group'>
-						    <label class='sr-only' for='exampleInputAmount'>img upload</label>
-						    <div class='input-group'>
-						      
-						      <input type='file'  id='img_file' name='img_file' placeholder='from root'><!--type and name are imp.-->
-						      
-						    </div>
-						  </div>
-						  <button type='submit' class='btn btn-primary' value='Submit' name='submit' onSubmit='return validateImage();' >upload</button>
-						</form>";
+				else{	
+				echo	'<div id="signup">   
+          <h1>Sign Up </h1>
+          
+          <form  action="" method="POST">
+          
+            <div class="field-wrap">
+              <label>
+                Name<span class="req">*</span>
+              </label>
+              <input type="text", name="Username", value="",required autocomplete="off">
+            </div>
+            
 
+
+            
+    
+
+
+
+          <div class="field-wrap">
+            <label>
+              Email Address<span class="req">*</span>
+            </label>
+           <input type="email", name="email", value="",required autocomplete="off">
+          </div>
+          
+
+
+
+          <div class="field-wrap">
+            <label>
+              Set a Password<span class="req">*</span>
+            </label>
+            <input type="password", name="password", value="",required autocomplete="off">
+          </div>
+
+
+
+        
+          <div class="field-wrap">
+            <label>
+              Confirm Password<span class="req">*</span>
+            </label>
+            <input type="password", name="repassword", value="", autocomplete="off"/>
+          </div>
+         
+         
+          <button name="submit" type="submit" class="button button-block" value="submit"/>Get Started</button>
+          </form>
+
+        </div>';
 				}
 			?>
 
