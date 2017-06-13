@@ -128,10 +128,16 @@
 		        			
 				        	echo '<div class="item">
 				        		<div class="animate-box">
-					        		<a href="images/img_1.jpg" class="image-popup fh5co-board-img" title="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, eos?"><img src="uploadsano/img_'.$row['idano'].'" alt="Free HTML5 Bootstrap template"></a>
+					        		<a href="uploadsano/img_'.$row['idano'].'" class="image-popup fh5co-board-img" title="you can enter any stuff here"> <img src="uploadsano/img_'.$row['idano'].'" alt="Free HTML5 Bootstrap template"></a>
+				        		</div>
+				        		<div class="fh5co-desc">click to <a href="download.php?file=img_'.$row['idano'].'">download</a></div>
+				        	</div>';
+				        	/*echo '<div class="item">
+				        		<div class="animate-box">
+					        		<a href="images/img_1.jpg" class="image-popup fh5co-board-img" title="you can enter any stuff here"><img src="uploadsano/img_'.$row['idano'].'" alt="Free HTML5 Bootstrap template"></a>
 				        		</div>
 				        		<div class="fh5co-desc"><!--text could have been written here--></div>
-				        	</div>';
+				        	</div>';*/
 				        }	
 	        		?>
 	        	</div>
