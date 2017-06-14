@@ -97,6 +97,8 @@
 			<li class="active"><a href="about.html">About</a></li>
 			<li><a href="pricing.html">Pricing</a></li>
 			<li><a href="contact.html">Contact</a></li>
+			<li><a href="signup.php">Signup</a></li>
+			<li><a href="login.php">Login</a></li>
 		</ul>
 		<h3 class="fh5co-lead">Connect with us</h3>
 		<p class="fh5co-social-icons">
@@ -108,6 +110,10 @@
 		</p>
 	</div>
 	<header id="fh5co-header" role="banner">
+		<?php 
+				
+
+		?>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
@@ -176,8 +182,9 @@
 							session_start();
 							$_SESSION['logged_in']=1;
 							$_SESSION['username']=$name;
+							//echo $_SESSION['username'];
 							//echo $_SESSION['logged_in'];
-							header("Location: index.php");
+							//header("Location: index.php");
 							echo "<h4>You are logged in. now you can upload.</h4>";
 							//what to do after user logs in ..write here.
 						}

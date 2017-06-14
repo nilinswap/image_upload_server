@@ -102,7 +102,14 @@
 		</p>
 	</div>
 	<header id="fh5co-header" role="banner">
-	
+		<?php 
+				session_start();//it is important to do this statement before using _SESSION global variables every time everywhere..do not go by its name..it also means resume.
+				if (isset($_SESSION['logged_in']))
+					echo '<div class="alert alert-success" role="alert">Welcome '. $_SESSION["username"].' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="logout.php"><button type="button" class="btn btn-info" >log out</button></div></a>';
+				else
+					echo '<div class="alert alert-info" role="alert">NOT logged in</div>';
+
+		?>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">

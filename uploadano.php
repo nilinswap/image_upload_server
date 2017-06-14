@@ -95,8 +95,10 @@
 		<ul>
 			<li><a href="index.php">Home</a></li>
 			<li class="active"><a href="about.html">About</a></li>
-			<li><a href="pricing.html">Pricing</a></li>
+			<li><a href="uploadano.php">Upload</a></li>
 			<li><a href="contact.html">Contact</a></li>
+			<li><a href="signup.php">Signup</a></li>
+			<li><a href="login.php">Login</a></li>
 		</ul>
 		<h3 class="fh5co-lead">Connect with us</h3>
 		<p class="fh5co-social-icons">
@@ -108,6 +110,14 @@
 		</p>
 	</div>
 	<header id="fh5co-header" role="banner">
+		<?php 
+				session_start();
+				if (isset($_SESSION['logged_in']))
+					echo '<div class="alert alert-success" role="alert">Welcome '. $_SESSION["username"].'</div>';
+				else
+					echo '<div class="alert alert-info" role="alert">NOT logged in</div>';
+
+		?>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
