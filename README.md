@@ -11,7 +11,7 @@ there attached is a small link to download.
 this repo and rename it to say X, 
 ### import database 
 1. by simply running ` mysql> source dbfile.sql` after having logged in to your mysql account
-### making server
+### loading server
 store this repo X in root of your server
 if apache server is there,type in terminal
 `sudo service apache2 restart`
