@@ -7,11 +7,11 @@ It is an image **upload-download server** application. It is equipped with **use
 The main page is having a dashboard with multiple images( uploaded by users). To upload an image a user has to login.
 there attached is a small link to download.
 ## To run
-# download 
+### download 
 this repo and rename it to say X, 
-# import database 
+### import database 
 1. by simply running ` mysql> source dbfile.sql` after having logged in to your mysql account
-# making server
+### making server
 store this repo X in root of your server
 if apache server is there,type in terminal
 `sudo service apache2 restart`
