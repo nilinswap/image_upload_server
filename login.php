@@ -119,6 +119,7 @@
 	</header>
 	<!-- END .header -->
 			<?php
+				
 				if(isset($_POST["submit"])){
 					$name=$_POST['Username'];
 					
@@ -171,7 +172,13 @@
 						        </div><br><div class="alert alert-danger">invalid credentials. :/
 							</div>';
 						else{
-							echo "done";
+							
+							session_start();
+							$_SESSION['logged_in']=1;
+							$_SESSION['username']=$name;
+							//echo $_SESSION['logged_in'];
+							header("Location: index.php");
+							echo "<h4>You are logged in. now you can upload.</h4>";
 							//what to do after user logs in ..write here.
 						}
 

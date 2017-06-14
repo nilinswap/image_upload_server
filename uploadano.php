@@ -119,69 +119,80 @@
 	</header>
 	<!-- END .header -->
 			<?php
-				if(isset($_POST["submit"])){
-					
-					//php7 doesn't support mysql lib so mysqli is used instead,below is a mysqli object.
-					$mysqliob = new mysqli('localhost','root','dusty') ;
-					
-					$mysqliob->select_db("orbasmdbano")or die($mysqliob->$error_list);
-					
-					 $file=$_FILES["img_file"]["tmp_name"];//name of file in temporary directory of server
-					//echo "<br>";
-					$image=addslashes(file_get_contents($_FILES['img_file']['tmp_name']));//addslashes is required to prevent sql injection. what file get contents get is mostly a binary object therefore in DB make space for a 'blob' object.
-					$image_name=addslashes($_FILES['img_file']['name']); 
-					
+				session_start();
+				//echo "hello";
+			//echo here.$_SESSION['logged_in'];
+				//$_SESSION['logged_in']=1;
+				if(isset($_SESSION['logged_in'])){
+					if(isset($_POST["submit"])){
 						
-					$image_size=getimagesize($file);
-					if ($image_size==false)
-						die( "<div class='alert alert-danger'>so you do not know what an <strong>image</strong> is..
-</div>");			
-					$location='uploadsano/';
-					//REMEMBER here the above folder must be granted with all rights or it will show a borken image
-					
-					//echo $imagepath=$location.$image_name;
-					//echo "here";
-					//echo "<h5> $image_name is uploaded</h5>";
-					
-					$insert =mysqli_query($mysqliob,"INSERT INTO Imagetableano (`img_nameano`) VALUES ('".$image_name."' )") or die(mysqli_error($mysqliob));
-					$last_id=$mysqliob->insert_id;
-					//echo "<br>".$image_name;
-					if(!$insert)
-						echo "some shit occured during uploading";
-					else
-					{	
+						//php7 doesn't support mysql lib so mysqli is used instead,below is a mysqli object.
+						$mysqliob = new mysqli('localhost','root','dusty') ;
 						
-						if(move_uploaded_file($_FILES['img_file']['tmp_name'], 'uploadsano/img_'.$last_id))
-							echo "<h5> $image_name is uploaded</h5>";
-						else 
-							echo 'not uploaded';
-						 
-											  //echo $row['img_name'];
-						echo "and your image looks like<br><img src='uploadsano/img_$last_id'>";
+						$mysqliob->select_db("orbasmdbano")or die($mysqliob->$error_list);
+						
+						 $file=$_FILES["img_file"]["tmp_name"];//name of file in temporary directory of server
+						//echo "<br>";
+						$image=addslashes(file_get_contents($_FILES['img_file']['tmp_name']));//addslashes is required to prevent sql injection. what file get contents get is mostly a binary object therefore in DB make space for a 'blob' object.
+						$image_name=addslashes($_FILES['img_file']['name']); 
+						
+							
+						$image_size=getimagesize($file);
+						if ($image_size==false)
+							die( "<div class='alert alert-danger'>so you do not know what an <strong>image</strong> is..
+	</div>");			
+						$location='uploadsano/';
+						//REMEMBER here the above folder must be granted with all rights or it will show a borken image
+						
+						//echo $imagepath=$location.$image_name;
 						//echo "here";
-						//echo "here";
+						//echo "<h5> $image_name is uploaded</h5>";
+						
+						$insert =mysqli_query($mysqliob,"INSERT INTO Imagetableano (`img_nameano`) VALUES ('".$image_name."' )") or die(mysqli_error($mysqliob));
+						$last_id=$mysqliob->insert_id;
+						//echo "<br>".$image_name;
+						if(!$insert)
+							echo "some shit occured during uploading";
+						else
+						{	
+							
+							if(move_uploaded_file($_FILES['img_file']['tmp_name'], 'uploadsano/img_'.$last_id))
+								echo "<h5> $image_name is uploaded</h5>";
+							else 
+								echo 'not uploaded';
+							 
+												  //echo $row['img_name'];
+							echo "and your image looks like<br><img src='uploadsano/img_$last_id'>";
+							//echo "here";
+							//echo "here";
 
-						// echo "<a href=get.php?id=$last_id>hey</a>";*/
+							// echo "<a href=get.php?id=$last_id>hey</a>";*/
+						}
+							
+
+
 					}
-						
+					else
+					{	echo "<h4>please upload an image</h4>
+							<form class='form-inline' method='post' action='' name='f' enctype='multipart/form-data' ><!--enctype,method and action are imp.-->
+							  <div class='form-group'>
+							    <label class='sr-only' for='exampleInputAmount'>img upload</label>
+							    <div class='input-group'>
+							      
+							      <input type='file'  id='img_file' name='img_file' placeholder='from root'><!--type and name are imp.-->
+							      
+							    </div>
+							  </div>
+							  <button type='submit' class='btn btn-primary' value='Submit' name='submit' onSubmit='return validateImage();' >upload</button>
+							</form>";
 
-
+					}
 				}
-				else
-				{	echo "<h4>please upload an image</h4>
-						<form class='form-inline' method='post' action='' name='f' enctype='multipart/form-data' ><!--enctype,method and action are imp.-->
-						  <div class='form-group'>
-						    <label class='sr-only' for='exampleInputAmount'>img upload</label>
-						    <div class='input-group'>
-						      
-						      <input type='file'  id='img_file' name='img_file' placeholder='from root'><!--type and name are imp.-->
-						      
-						    </div>
-						  </div>
-						  <button type='submit' class='btn btn-primary' value='Submit' name='submit' onSubmit='return validateImage();' >upload</button>
-						</form>";
-
+				else{
+					echo '</div><br><div class="alert alert-danger">log in to upload. :/
+							</div>';
 				}
+				//unset($_SESSION['logged_in']);
 			?>
 
 	
