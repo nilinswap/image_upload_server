@@ -95,7 +95,7 @@
 		<ul>
 			<li><a href="index.php">Home</a></li>
 			<li class="active"><a href="about.html">About</a></li>
-			<li><a href="pricing.html">Pricing</a></li>
+			<li><a href="uploadano.php">Upload</a></li>
 			<li><a href="contact.html">Contact</a></li>
 			<li><a href="signup.php">Signup</a></li>
 			<li><a href="login.php">Login</a></li>
