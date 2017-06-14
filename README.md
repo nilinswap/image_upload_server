@@ -17,9 +17,7 @@ if apache server is there,type in terminal
 `sudo service apache2 restart`
 and just `open domainname/X/` on browser
 
-# run server
-if apache server is there,type in terminal
-'sudo service apache2 restart'
+
 ## Extension
 Looking to attach a 'like' feature as there is in instagram.
 
