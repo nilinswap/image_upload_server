@@ -1,0 +1,33 @@
+1. download the source of a kernel (preferably latest but mine used 4.11.5).
+2. simply compile the kernel source and reboot the kernel ..just to get a knack of it.
+3. now make a folder inside your kernel source; in my case it was /usr/src/linux-4.11.5, name it mysyscallfol and inside it make a c file with the definition of your sysfunction.call it mysyscall.c
+4. in the same folder as above make a 'make' file. call it 'Makefile'. in it put 'obj-y := mysyscall.o'.now we have to add this makefile's location to kernel's makefile. we do it in 10.
+5. now we do : opening /usr/src/linux-whatever/arch/x86 or whatever/entry/syscalls/syscall_32.tbl
+6. at the end, enter the syscall. enter one serial no. more than last one and so it last was
+#define whatever_syscall 45
+enter #define __NR_mysyscall 46
+7. remember previous macro no. for mysyscall. go to do a similar thing in /usr/src/linux-whatever/arch/include/asm/unistd.h if you do not find macro no. listing. follow the header it included in my case it was /usr/src/linux-4.11.5/include/uapi/asm-generic/unistd.h
+do the same thing for /usr/include/asm-generic/unistd.h
+
+8.REMEMBER here also increase __NR_SYSCALLS macro (in same document) by one.it contains  the total no. of syscalls( well, hold on and listen what I wrote below).
+REMEMBER stick to the same no. for syscall do not declare different no.s, in my case /usr/src/linux-whatever/arch/x86/entry/syscalls/syscall_32.tbl had 383 as last entry (before my adding my syscall) and 292 in one unistd.h and 284 in other..so I declared 384 on all and increased __NR_SYSCALLS by one in both unistd.h.
+REMEMBER in unistd.h, below
+ #define __NR_mysyscall whatever
+ add
+ __SYSCALL(__NR_mysyscall,sys_mysyscall)
+9. now add decleration of your syscall function /usr/src/linux-whatever/include/linux/syscalls.h 
+i added asmlinkage long sys_mysyscall(void); in mine
+remember use void at appropriate places, do not leave blank.
+10. in make file of kernel Makefile 
+find something like
+'core-y += kernel/ certs/ mm/ fs/ ipc/ security/ crypto/ block/ '
+add mysyscallfol/ at the end so that it looks like
+'core-y += kernel/ certs/ mm/ fs/ ipc/ security/ crypto/ block/ mysyscallfol/'
+this was so that the while compiling kernel, the syscalls makefile is also compiled
+11. compile a new,reboot and enjoy your syscall, I called using 
+	long int s=syscall(384);
+	printf("System call .: sys_helloworld:.returned %ld \n",s);
+
+3 -10 are not required in strict order but the editting must be proper.
+thanks
+
